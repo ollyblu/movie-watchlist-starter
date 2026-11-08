@@ -3,3 +3,6 @@ Thumbs.db
 *.log
 .env
 .env.local
+node_modules/
+backend/data/
+*.db
