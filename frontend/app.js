@@ -6,8 +6,14 @@
 // ==========================================
 // 1. STATE MANAGEMENT
 // ==========================================
+// Served by the backend itself (local :8000 or a deployment): call the same origin.
+// Opened from a file or another local dev server: fall back to the local backend.
+const isLocalDevServer = location.protocol === 'file:'
+  || (['localhost', '127.0.0.1'].includes(location.hostname) && location.port !== '8000');
+const defaultApiBaseUrl = isLocalDevServer ? 'http://localhost:8000/api' : `${location.origin}/api`;
+
 const state = {
-  apiBaseUrl: localStorage.getItem('filmlog_api_url') || 'http://localhost:8000/api',
+  apiBaseUrl: localStorage.getItem('filmlog_api_url') || defaultApiBaseUrl,
   token: localStorage.getItem('filmlog_token') || null,
   user: JSON.parse(localStorage.getItem('filmlog_user') || 'null'),
   currentTab: 'discover',
@@ -417,15 +423,21 @@ async function openMovieDetail(movieId) {
   `;
 
   const modal = document.getElementById('movie-detail-modal');
+  clearTimeout(detailModalCloseTimer);
   modal.classList.remove('hidden');
   setTimeout(() => modal.classList.remove('opacity-0'), 10);
   lucide.createIcons();
 }
 
+// The detail and review popups share one modal element. "Log" in the detail popup closes it and
+// opens the review form at once, so the pending hide must be cancelled or it hides the new form.
+let detailModalCloseTimer;
+
 function closeMovieDetailModal() {
   const modal = document.getElementById('movie-detail-modal');
   modal.classList.add('opacity-0');
-  setTimeout(() => modal.classList.add('hidden'), 200);
+  clearTimeout(detailModalCloseTimer);
+  detailModalCloseTimer = setTimeout(() => modal.classList.add('hidden'), 200);
 }
 
 // ==========================================
@@ -605,6 +617,7 @@ function openWatchedModal(movieId) {
 
   setRatingValue(5);
   const modal = document.getElementById('movie-detail-modal');
+  clearTimeout(detailModalCloseTimer);
   modal.classList.remove('hidden');
   setTimeout(() => modal.classList.remove('opacity-0'), 10);
   lucide.createIcons();

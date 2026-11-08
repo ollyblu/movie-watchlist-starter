@@ -1,0 +1,12 @@
+{
+  "name": "filmlog",
+  "private": true,
+  "description": "Root launcher: the API lives in backend/, but the seeder reads data/movies.json from here.",
+  "engines": {
+    "node": ">=22.9"
+  },
+  "scripts": {
+    "build": "cd backend && npm ci",
+    "start": "cd backend && npm run db:setup && npm start"
+  }
+}

@@ -1,3 +1,7 @@
+> **Implementasi backend ada di [`backend/`](backend/README.md).** Cara menjalankan, daftar endpoint, dan ERD ada di README tersebut. Alasan desainnya ada di [`docs/DECISIONS.md`](docs/DECISIONS.md).
+>
+> **Live:** [https://movie-watchlist.up.railway.app](https://movie-watchlist.up.railway.app/) · **Swagger:** [/api/docs](https://movie-watchlist.up.railway.app/api/docs) · **Video walkthrough:** [Google Drive](https://drive.google.com/file/d/1lKy9x3TeIryZ_Raw4j91pougEUBIEsT2/view?usp=sharing)
+
 # FilmLog — GDGoC Backend Recruitment Task Starter Pack
 
 Selamat datang di repositori penugasan backend **FilmLog (Movie Watchlist & Review Platform)**. Repositori ini menyediakan:
